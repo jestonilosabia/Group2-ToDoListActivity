@@ -31,6 +31,7 @@ body {
   min-height: 100vh;
 }
 
+
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
@@ -40,6 +41,7 @@ button {
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
+  margin-left: 10px;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
@@ -47,6 +49,7 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: #646cff;
 }
@@ -68,7 +71,11 @@ button:focus-visible {
   }
 }
 
-input[type=checkbox]:checked + label {
+input[type=checkbox]:checked + span {
   color:gray;
   text-decoration: line-through;
 } 
+
+div {
+  margin: 30px;
+}

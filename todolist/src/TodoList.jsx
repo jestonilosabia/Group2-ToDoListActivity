@@ -1,8 +1,23 @@
 import React, { useState } from 'react';
 
+
 function TodoList() {
   const [todos, setTodos] = useState([]);
   const [inputValue, setInputValue] = useState('');
+  const [checked, setChecked] = useState('');
+
+  const [checkedState, setCheckedState] = useState(
+    new Array(todos.length).fill(false)
+  );
+
+  const handleOnChange = (position) => {
+    const updatedCheckedState = checkedState.map((item, index) =>
+      index === position ? !item : item
+    );
+
+    setCheckedState(updatedCheckedState);
+
+  };
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
@@ -14,7 +29,19 @@ function TodoList() {
       return;
     }
     setTodos([...todos, inputValue]);
+    setChecked(false);
     setInputValue('');
+  };
+
+  const handleChange = (index) => {
+    const newTodos = [...todos];
+    if (index.target.checked) {
+        setChecked(true);
+    } else{
+        setChecked(false);
+    }
+    setTodos(newTodos, checked);
+    
   };
 
   const handleTodoDelete = (index) => {
@@ -27,25 +54,23 @@ function TodoList() {
     <div>
       <h1>To-Do List</h1>
       <form onSubmit={handleFormSubmit}>
-        <div>
-            <input id="todoList1" type="checkbox" value={inputValue} onChange={handleInputChange} />
-            <label htmlFor='todoList1'>todo-1</label> 
-        </div>
-        <div>
-            <input id="todoList2" type="checkbox" value={inputValue} onChange={handleInputChange} />
-            <label htmlFor='todoList2'>todo-1</label> 
-        </div>
-        <div><button type="submit">Add</button></div>
-
+        <input type="text" value={inputValue} onChange={handleInputChange} />
+        <button type="submit">Add </button>
       </form>
-      <ul>
-        {todos.map((todo, index) => (
-          <li key={index}>
-            {todo}{' '}
-            <button onClick={() => handleTodoDelete(index)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+    
+      {todos.map((todo, index) => (
+        <div key={index}>
+          <input
+            id={`todolist-${index}`}
+            type="checkbox"
+            checked={checkedState[index]}
+            onChange={() => handleOnChange(index)}
+          />
+          <span>{todo}{' '}</span>
+          <button onClick={() => handleTodoDelete(index)}>Delete</button>
+        </div>
+      ))}
+
     </div>
   );
 }
